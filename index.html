@@ -7,6 +7,21 @@
   <meta name="description" content="Pluto TV — استریم رایگان فیلم و سریال" />
   <title>Pluto TV</title>
 
+  <!-- Auto-detect base path (works on GitHub Pages, jsDelivr CDN, or local) -->
+  <script>
+    (function() {
+      var path = location.pathname;
+      // If hosted on jsDelivr or similar with /gh/user/repo@branch/ prefix
+      var match = path.match(/^(\/[^/]+\/[^/]+@[^/]+)\//);
+      if (match) {
+        var base = document.createElement('base');
+        base.href = match[1] + '/';
+        document.head.appendChild(base);
+      }
+      // For GitHub Pages: user.github.io/pluto-tv/ — relative paths work without base tag
+    })();
+  </script>
+
   <!-- PWA -->
   <link rel="manifest" href="manifest.json" />
   <link rel="apple-touch-icon" href="assets/icons/icon-192.png" />
