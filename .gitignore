@@ -1,0 +1,7 @@
+# Pluto TV — فایل‌های نادیده‌گرفته‌شده
+node_modules/
+npm-debug.log*
+.DS_Store
+*.log
+.wrangler/
+.dev.vars

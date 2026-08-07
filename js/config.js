@@ -1,46 +1,39 @@
-/* =============================================
-   Pluto TV — Config
-   ============================================= */
+/* ============================================================
+   Pluto TV — تنظیمات (config.js)
+   تمام آدرس‌ها و کلیدها در یک جا
+   ============================================================ */
+(function (window) {
+  'use strict';
 
-const CONFIG = {
-  APP_NAME: 'Pluto TV',
-  VERSION: '1.0.0',
+  window.PlutoConfig = {
+    // نام اپ
+    appName: 'Pluto TV',
 
-  // API settings (from CCloud source)
-  API: {
-    PRIMARY_SERVER: 'https://server-hi-speed-iran.info',
-    HELPER_SERVERS: [
+    // سرور اصلی API
+    apiBase: 'https://server-hi-speed-iran.info',
+
+    // سرورهای کمکی (در صورت خطای سرور اصلی)
+    helperServers: [
       'https://hostinnegar.com',
       'https://windowsdiba.info'
     ],
-    API_KEY: '4F5A9C3D9A86FA54EACEDDD635185',
-    ENDPOINTS: {
-      MOVIES:    '/api/movie/by/filtres',
-      SERIES:    '/api/serie/by/filtres',
-      SEASONS:   '/api/season/by/serie',
-      SEARCH:    '/api/search',
-      GENRES:    '/api/genre',
-      COUNTRIES: '/api/country'
-    },
-    TIMEOUT: 30000
-  },
 
-  // Pagination
-  PAGE_SIZE: 20,
-  MAX_PAGES: 50,
+    // کلید API
+    apiKey: '4F5A9C3D9A86FA54EACEDDD635185',
 
-  // Cache TTL (ms)
-  CACHE_TTL: 10 * 60 * 1000, // 10 minutes
-};
+    // تعداد آیتم در هر صفحه
+    pageSize: 30,
 
-// Fix server URL (ensure no trailing slash issues)
-function fixUrl(url) {
-  return url.replace(/\/+/g, '/').replace(':/', '://');
-}
+    // فیلترهای مرتب‌سازی
+    filters: {
+      DEFAULT: 'created',
+      BY_YEAR: 'year',
+      BY_IMDB: 'imdb'
+    }
+  };
 
-// Filter types matching CCloud
-const FILTER_TYPES = {
-  DEFAULT:  'created',
-  BY_YEAR:  'year',
-  BY_IMDB:  'imdb'
-};
+  // تشخیص مرورگر تلویزیون
+  var ua = (window.navigator && window.navigator.userAgent) || '';
+  window.PlutoConfig.isTizen = (ua.indexOf('Tizen') !== -1) || (window.tizen !== undefined);
+  window.PlutoConfig.isSmartTV = window.PlutoConfig.isTizen || (ua.indexOf('SMART-TV') !== -1) || (ua.indexOf('SmartTV') !== -1);
+})(window);

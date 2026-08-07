@@ -1,136 +1,90 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=1920, initial-scale=1.0, viewport-fit=cover" />
-  <meta name="theme-color" content="#0b0b0f" />
-  <meta name="description" content="Pluto TV — استریم رایگان فیلم و سریال" />
-  <title>Pluto TV</title>
-
-  <!-- Auto-detect base path (works on GitHub Pages, jsDelivr CDN, or local) -->
-  <script>
-    (function() {
-      var path = location.pathname;
-      // If hosted on jsDelivr or similar with /gh/user/repo@branch/ prefix
-      var match = path.match(/^(\/[^/]+\/[^/]+@[^/]+)\//);
-      if (match) {
-        var base = document.createElement('base');
-        base.href = match[1] + '/';
-        document.head.appendChild(base);
-      }
-      // For GitHub Pages: user.github.io/pluto-tv/ — relative paths work without base tag
-    })();
-  </script>
-
-  <!-- PWA -->
-  <link rel="manifest" href="manifest.json" />
-  <link rel="apple-touch-icon" href="assets/icons/icon-192.png" />
-
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet" />
-
-  <!-- CSS -->
-  <link rel="stylesheet" href="css/style.css" />
-
-  <!-- Video.js for playback -->
-  <link href="https://cdn.jsdelivr.net/npm/video.js@8.10.0/dist/video-js.min.css" rel="stylesheet" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Pluto TV</title>
+<meta name="theme-color" content="#0b0b12">
+<!-- بهینه‌سازی برای مرورگر تلویزیون سامسونگ (Tizen) -->
+<link rel="stylesheet" href="css/style.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%237c3aed'/%3E%3Cellipse cx='32' cy='32' rx='40' ry='10' fill='none' stroke='%23a855f7' stroke-width='4' transform='rotate(-20 32 32)'/%3E%3Ccircle cx='50' cy='22' r='5' fill='%23e879f9'/%3E%3C/svg%3E">
 </head>
 <body>
-
-  <!-- ===== Splash ===== -->
-  <div id="splash" class="splash-screen">
-    <div class="splash-logo">Pluto<span>TV</span></div>
-    <div class="splash-spinner"></div>
+  <!-- صفحه بارگذاری -->
+  <div id="splash">
+    <div class="splash-logo">
+      <svg viewBox="0 0 64 64" width="90" height="90" aria-hidden="true">
+        <circle cx="32" cy="32" r="26" fill="#7c3aed"/>
+        <ellipse cx="32" cy="32" rx="38" ry="9" fill="none" stroke="#a855f7" stroke-width="3.5" transform="rotate(-20 32 32)"/>
+        <circle cx="50" cy="21" r="4.5" fill="#e879f9"/>
+      </svg>
+      <h1>Pluto <span>TV</span></h1>
+      <p>در حال آماده‌سازی…</p>
+    </div>
   </div>
 
-  <!-- ===== App Container ===== -->
-  <div id="app" class="app-container hidden">
-
-    <!-- Sidebar (TV navigation) -->
-    <nav id="sidebar" class="sidebar">
-      <div class="sidebar-logo">Pluto<span>TV</span></div>
-      <ul class="sidebar-menu">
-        <li class="nav-item active" data-route="home" data-focus>
-          <svg viewBox="0 0 24 24" width="28" height="28"><path fill="currentColor" d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
-          <span>خانه</span>
-        </li>
-        <li class="nav-item" data-route="movies">
-          <svg viewBox="0 0 24 24" width="28" height="28"><path fill="currentColor" d="M18 4l2 8h-6l2-8zm-8 0l2 8H6l2-8zm-4 0l2 8H2l2-8zm12 0l2 8h-6l2-8zM2 14h20v2H2z"/></svg>
-          <span>فیلم‌ها</span>
-        </li>
-        <li class="nav-item" data-route="series">
-          <svg viewBox="0 0 24 24" width="28" height="28"><path fill="currentColor" d="M21 3H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h6v2h6v-2h6c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 14H3V5h18v12z"/></svg>
-          <span>سریال‌ها</span>
-        </li>
-        <li class="nav-item" data-route="search">
-          <svg viewBox="0 0 24 24" width="28" height="28"><path fill="currentColor" d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19l-5-5zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z"/></svg>
-          <span>جستجو</span>
-        </li>
-        <li class="nav-item" data-route="favorites">
-          <svg viewBox="0 0 24 24" width="28" height="28"><path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-          <span>علاقه‌مندی‌ها</span>
-        </li>
-        <li class="nav-item" data-route="settings">
-          <svg viewBox="0 0 24 24" width="28" height="28"><path fill="currentColor" d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.488.488 0 0 0-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.484.484 0 0 0-.48-.41h-3.84a.484.484 0 0 0-.48.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94 0 .31.04.64.09.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .43-.17.48-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.21.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
-          <span>تنظیمات</span>
-        </li>
-      </ul>
+  <!-- بدنه اپ -->
+  <div id="app" class="hidden">
+    <!-- نوار کناری -->
+    <nav id="sidebar" aria-label="منوی اصلی">
+      <div class="brand">
+        <svg viewBox="0 0 64 64" width="34" height="34" aria-hidden="true">
+          <circle cx="32" cy="32" r="26" fill="#7c3aed"/>
+          <ellipse cx="32" cy="32" rx="38" ry="9" fill="none" stroke="#a855f7" stroke-width="3.5" transform="rotate(-20 32 32)"/>
+          <circle cx="50" cy="21" r="4.5" fill="#e879f9"/>
+        </svg>
+        <span class="brand-name">Pluto TV</span>
+      </div>
+      <div id="nav-items"></div>
       <div class="sidebar-footer">
-        <span class="version">v1.0.0</span>
+        <div class="hint">▲▼◀▶ حرکت · OK انتخاب · ⏎ بازگشت</div>
       </div>
     </nav>
 
-    <!-- Main content -->
-    <main id="main" class="main-content">
-      <!-- Pages rendered here by JS -->
-    </main>
-
+    <!-- محتوای اصلی -->
+    <main id="main"></main>
   </div>
 
-  <!-- ===== Video Player Overlay ===== -->
-  <div id="player-overlay" class="player-overlay hidden">
-    <div class="player-header">
-      <button id="player-back" class="player-back-btn" data-focus>
-        <svg viewBox="0 0 24 24" width="32" height="32"><path fill="currentColor" d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
-        <span>بازگشت</span>
-      </button>
-      <h2 id="player-title"></h2>
+  <!-- پخش‌کننده ویدیو -->
+  <div id="player-overlay" class="hidden">
+    <video id="video" playsinline></video>
+    <div id="player-ui">
+      <div id="player-top">
+        <div id="player-title"></div>
+        <button class="focusable player-btn" id="btn-back-player" data-action="back">بازگشت ⏎</button>
+      </div>
+      <div id="player-center">
+        <button class="focusable player-btn big" id="btn-playpause" data-action="playpause">▶</button>
+        <div id="player-msg" class="hidden"></div>
+      </div>
+      <div id="player-bottom">
+        <div id="player-timebar">
+          <div id="player-buffer"></div>
+          <div id="player-progress"></div>
+          <div id="player-handle"></div>
+        </div>
+        <div id="player-time">00:00 / 00:00</div>
+        <div id="player-controls">
+          <button class="focusable player-btn sm" id="btn-rewind" data-action="rewind">⏪ ۱۰ث</button>
+          <button class="focusable player-btn sm" id="btn-fwd" data-action="fwd">⏩ ۱۰ث</button>
+          <button class="focusable player-btn sm" data-action="fullscreen">⛶ تمام‌صفحه</button>
+          <button class="focusable player-btn sm" id="btn-quality" data-action="quality">کیفیت</button>
+          <button class="focusable player-btn sm" data-action="download">⬇ دانلود</button>
+        </div>
+      </div>
     </div>
-    <video id="video-player" class="video-js vjs-big-pinned vjs-fluid" controls preload="auto" playsinline></video>
+    <div id="quality-menu" class="hidden"></div>
   </div>
 
-  <!-- ===== Detail Modal ===== -->
-  <div id="detail-modal" class="detail-modal hidden">
-    <div id="detail-content" class="detail-content"></div>
-  </div>
+  <!-- پیام خطا / اعلان -->
+  <div id="toast" class="hidden"></div>
 
-  <!-- ===== Loading ===== -->
-  <div id="loading" class="loading-overlay hidden">
-    <div class="loading-spinner"></div>
-    <p>در حال بارگذاری...</p>
-  </div>
-
-  <!-- ===== Toast ===== -->
-  <div id="toast" class="toast hidden"></div>
-
-  <!-- Scripts -->
-  <script src="https://cdn.jsdelivr.net/npm/video.js@8.10.0/dist/video.min.js"></script>
+  <!-- اسکریپت‌ها -->
   <script src="js/config.js"></script>
-  <script src="js/pages/shared.js"></script>
   <script src="js/api.js"></script>
-  <script src="js/storage.js"></script>
+  <script src="js/focus.js"></script>
   <script src="js/player.js"></script>
-  <script src="js/router.js"></script>
-  <script src="js/pages/home.js"></script>
-  <script src="js/pages/movies.js"></script>
-  <script src="js/pages/series.js"></script>
-  <script src="js/pages/search.js"></script>
-  <script src="js/pages/favorites.js"></script>
-  <script src="js/pages/settings.js"></script>
-  <script src="js/pages/detail.js"></script>
-  <script src="js/remote.js"></script>
+  <script src="js/views.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>
